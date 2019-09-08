@@ -1,3 +1,6 @@
+import java.math.RoundingMode;
+import java.math.BigDecimal;
+
 public class item{
 	// vars
 	private int quantity;
@@ -35,13 +38,24 @@ public class item{
 		double total = subTotal;
 		double tax = 0.0;
 		if(is){
+		
 			tax+= subTotal*.05;
 		}
+		// System.out.println(cat);
 		// hardcode in things that are not food, books, and medical products based on given inputs
-		if(cat == "music CD" || cat == "bottle of perfume" || cat == "headache pills" ){
+		if(cat.contains("music")  || cat.contains("perfume")  ){
+
 			tax+= subTotal*.1;
 		}
+		tax =  nearest5Percent(tax);
 		return tax + subTotal;
 	}
+
+	public double nearest5Percent(double amount) {
+
+		return new BigDecimal(Math.ceil(amount * 20)/20).setScale(2,RoundingMode.HALF_UP).doubleValue();
+
+	}
+
 
 }
